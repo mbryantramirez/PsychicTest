@@ -13,7 +13,7 @@ import java.util.List;
 
 
 public class PsychicTestDBHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "psychicTest.db";
+    public static final String DATABASE_NAME = "psychicTest.db";
     private static final String TABLE_NAME = "averageRecorder";
     private static final int SCHEMA_VERSION = 1;
 
@@ -58,6 +58,23 @@ public class PsychicTestDBHelper extends SQLiteOpenHelper {
                     psychicAverage.getClickCount() + ");");
         }
         cursor.close();
+    }
+
+    public List<PsychicAverage> psychicList() {
+        List<PsychicAverage> psychicList = new ArrayList<>();
+        Cursor cursor = getReadableDatabase().rawQuery(
+                "SELECT * FROM " + TABLE_NAME + ";", null);
+        if(cursor != null) {
+            if(cursor.moveToFirst()) {
+                do {
+                    PsychicAverage psychicAverage = new PsychicAverage(
+                            cursor.getInt(cursor.getColumnIndex("click_counts")),
+                            cursor.getInt(cursor.getColumnIndex("right_guesses")));
+                    psychicList.add(psychicAverage);
+                } while (cursor.moveToNext());
+            }
+        }
+        return psychicList;
     }
 
 

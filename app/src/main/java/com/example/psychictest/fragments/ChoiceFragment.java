@@ -70,6 +70,14 @@ public class ChoiceFragment extends Fragment {
        Log.d("TAG1", "click-count: " + MainActivity.click_count);
        Log.d("TAG1", "right-guesses: " + MainActivity.right_guesses);
 
+       List<PsychicAverage> psychicList = MainActivity.psychicAverage.psychicList();
+
+      for(PsychicAverage psychicAverage : psychicList){
+          Log.d("TAG2", "click-count: " + psychicAverage.getClickCount());
+          Log.d("TAG2", "right_guesses: " + psychicAverage.getRightGuesses());
+      }
+
+
 
 
        return rootView;
@@ -147,6 +155,7 @@ public class ChoiceFragment extends Fragment {
                 choice = Integer.parseInt(image1.getTag().toString());
                 MainActivity.psychicAverage.updateClickCounts(++MainActivity.click_count);
 
+
                 if(choice == imageList.get(comparison)){
                     MainActivity.psychicAverage.updateRightGuesses(++MainActivity.right_guesses);
                     getActivity().getSupportFragmentManager().beginTransaction()
@@ -173,6 +182,7 @@ public class ChoiceFragment extends Fragment {
             public void onClick(View v) {
                 choice = Integer.parseInt(image2.getTag().toString());
                 MainActivity.psychicAverage.updateClickCounts(++MainActivity.click_count);
+
 
                 if(choice == imageList.get(comparison)){
                     MainActivity.psychicAverage.updateRightGuesses(++MainActivity.right_guesses);
@@ -202,6 +212,7 @@ public class ChoiceFragment extends Fragment {
                 choice = Integer.parseInt(image3.getTag().toString());
                 MainActivity.psychicAverage.updateClickCounts(++MainActivity.click_count);
 
+
                 if(choice == imageList.get(comparison)){
                     MainActivity.psychicAverage.updateRightGuesses(++MainActivity.right_guesses);
                     getActivity().getSupportFragmentManager().beginTransaction()
@@ -228,6 +239,7 @@ public class ChoiceFragment extends Fragment {
             public void onClick(View v) {
                 choice = Integer.parseInt(image4.getTag().toString());
                 MainActivity.psychicAverage.updateClickCounts(++MainActivity.click_count);
+
 
                 if(choice == imageList.get(comparison)){
                     MainActivity.psychicAverage.updateRightGuesses(++MainActivity.right_guesses);

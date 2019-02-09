@@ -52,7 +52,7 @@ public class ResultFragment extends Fragment {
 
         float average;
         if(click_counts > 0 || right_guesses > 0){
-            average =  (float) right_guesses / (float) click_counts;
+            average =  (float) right_guesses  / (float) click_counts ;
         }else{
             average = 0;
         }
