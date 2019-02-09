@@ -60,23 +60,6 @@ public class PsychicTestDBHelper extends SQLiteOpenHelper {
         cursor.close();
     }
 
-    public List<PsychicAverage> getAverageList(){
-        List<PsychicAverage> psychicAverages = new ArrayList<>();
-        Cursor cursor = getReadableDatabase().rawQuery(
-                "SELECT * FROM " + TABLE_NAME + ";",
-                null);
-        if(cursor != null){
-            if(cursor.moveToFirst()){
-                do{
-                    PsychicAverage psychicAverage = new PsychicAverage(
-                            cursor.getInt(cursor.getColumnIndex("right_guesses")),
-                            cursor.getInt(cursor.getColumnIndex("click_counts")));
-                    psychicAverages.add(psychicAverage);
-                }while(cursor.moveToNext());
-            }
-        }
-        return psychicAverages;
-    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
