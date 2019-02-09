@@ -3,6 +3,7 @@ package com.example.psychictest.fragments;
 
 import android.media.Image;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.psychictest.MainActivity;
 import com.example.psychictest.R;
+import com.example.psychictest.database.PsychicTestDBHelper;
+import com.example.psychictest.model.PsychicAverage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +33,7 @@ public class ChoiceFragment extends Fragment {
     private Random random = new Random();
     private int comparison = random.nextInt(4);
 
+
     public ChoiceFragment() {
         // Required empty public constructor
     }
@@ -40,6 +45,7 @@ public class ChoiceFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,9 +63,12 @@ public class ChoiceFragment extends Fragment {
        image2 = rootView.findViewById(R.id.image2);
        image3 = rootView.findViewById(R.id.image3);
        image4 = rootView.findViewById(R.id.image4);
-
+       MainActivity.psychicAverage = new PsychicTestDBHelper(rootView.getContext());
+       MainActivity.psychicAverage.addPsychicAverage(new PsychicAverage(MainActivity.click_count, MainActivity.right_guesses));
        themeChoiceSelector();
        choiceSelected();
+       Log.d("TAG1", "click-count: " + MainActivity.click_count);
+       Log.d("TAG1", "right-guesses: " + MainActivity.right_guesses);
 
 
 
@@ -136,53 +145,79 @@ public class ChoiceFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 choice = Integer.parseInt(image1.getTag().toString());
-                Log.d("TAG", image1.getTag().toString());
-                Log.d("TAG", String.valueOf(imageList.get(comparison)));
+                MainActivity.psychicAverage.updateClickCounts(++MainActivity.click_count);
 
                 if(choice == imageList.get(comparison)){
+                    MainActivity.psychicAverage.updateRightGuesses(++MainActivity.right_guesses);
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment, ResultFragment.newInstance("Correct"))
+                            .replace(R.id.fragment, ResultFragment.newInstance(
+                                    "Correct",
+                                    MainActivity.click_count,
+                                    MainActivity.right_guesses))
                             .addToBackStack(null)
                             .commit();
                 }else{
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment, ResultFragment.newInstance("Incorrect"))
+                            .replace(R.id.fragment, ResultFragment.newInstance(
+                                    "Incorrect",
+                                    MainActivity.click_count,
+                                    MainActivity.right_guesses))
                             .addToBackStack(null)
                             .commit();
                 }
+
             }
         });
         image2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 choice = Integer.parseInt(image2.getTag().toString());
+                MainActivity.psychicAverage.updateClickCounts(++MainActivity.click_count);
 
                 if(choice == imageList.get(comparison)){
+                    MainActivity.psychicAverage.updateRightGuesses(++MainActivity.right_guesses);
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment, ResultFragment.newInstance("Correct"))
+                            .replace(R.id.fragment, ResultFragment.newInstance(
+                                    "Correct",
+                                    MainActivity.click_count,
+                                    MainActivity.right_guesses))
                             .addToBackStack(null)
                             .commit();
+
                 }else{
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment, ResultFragment.newInstance("Incorrect"))
+                            .replace(R.id.fragment, ResultFragment.newInstance(
+                                    "Incorrect",
+                                    MainActivity.click_count,
+                                    MainActivity.right_guesses))
                             .addToBackStack(null)
                             .commit();
                 }
+
             }
         });
         image3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 choice = Integer.parseInt(image3.getTag().toString());
+                MainActivity.psychicAverage.updateClickCounts(++MainActivity.click_count);
 
                 if(choice == imageList.get(comparison)){
+                    MainActivity.psychicAverage.updateRightGuesses(++MainActivity.right_guesses);
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment, ResultFragment.newInstance("Correct"))
+                            .replace(R.id.fragment, ResultFragment.newInstance(
+                                    "Correct",
+                                    MainActivity.click_count,
+                                    MainActivity.right_guesses))
                             .addToBackStack(null)
                             .commit();
+
                 }else{
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment, ResultFragment.newInstance("Incorrect"))
+                            .replace(R.id.fragment, ResultFragment.newInstance(
+                                    "Incorrect",
+                                    MainActivity.click_count,
+                                    MainActivity.right_guesses))
                             .addToBackStack(null)
                             .commit();
                 }
@@ -192,18 +227,27 @@ public class ChoiceFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 choice = Integer.parseInt(image4.getTag().toString());
+                MainActivity.psychicAverage.updateClickCounts(++MainActivity.click_count);
 
                 if(choice == imageList.get(comparison)){
+                    MainActivity.psychicAverage.updateRightGuesses(++MainActivity.right_guesses);
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment, ResultFragment.newInstance("Correct"))
+                            .replace(R.id.fragment, ResultFragment.newInstance(
+                                    "Correct",
+                                    MainActivity.click_count,
+                                    MainActivity.right_guesses))
                             .addToBackStack(null)
                             .commit();
                 }else{
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.fragment, ResultFragment.newInstance("Incorrect"))
+                            .replace(R.id.fragment, ResultFragment.newInstance(
+                                    "Incorrect",
+                                    MainActivity.click_count,
+                                    MainActivity.right_guesses))
                             .addToBackStack(null)
                             .commit();
                 }
+
             }
         });
     }
